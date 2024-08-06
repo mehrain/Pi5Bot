@@ -21,6 +21,9 @@ async def on_message(message):
 
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
+        
+    if message.content.startswith('$whoisacunt'):
+        await message.channel.send('Vinny is a fucking frog cunt obviously, who else do you think?')
 #fetching the token 
 token = os.getenv('DISCORD_TOKEN')  
 
