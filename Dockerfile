@@ -1,8 +1,11 @@
 # Use a lightweight Python image as the base
 FROM python:3.9-slim AS base
 
-# Install git
-RUN apt-get update && apt-get install -y git
+# Install git and build tools
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    gcc
 
 # Set the working directory
 WORKDIR /apps/Pi5Bot
