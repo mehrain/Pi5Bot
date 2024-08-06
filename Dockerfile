@@ -1,5 +1,5 @@
 # Use a lightweight Python image as the base
-FROM python:3.9-slim as base
+FROM python:3.9-slim AS base
 
 # Install git
 RUN apt-get update && apt-get install -y git
@@ -10,11 +10,8 @@ WORKDIR /apps/Pi5Bot
 # Clone the repository
 RUN git clone https://github.com/mehrain/Pi5Bot.git .
 
-# Copy only the necessary files
+# Copy the requirements file
 COPY requirements.txt ./
-COPY main.py ./
-#! You have to manually copy the .env file to the container in this project root directory.
-COPY .env ./
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
