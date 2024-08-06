@@ -21,6 +21,9 @@ async def on_message(message):
 
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
+    
+    if message.content.startswith('$bye'):
+        await message.channel.send('Goodbye!')
         
 #fetching the token 
 token = os.getenv('DISCORD_TOKEN')  
