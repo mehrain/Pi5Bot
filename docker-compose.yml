@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  pi5bot:
+    build: .
+    container_name: pi5bot_container
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/apps/Pi5Bot
+    command: /bin/bash -c "/apps/Pi5Bot/pull_latest.sh && python main.py"
+    env_file:
+      - /home/mehrain/Workspace/github.com/mehrain/Pi5Bot/.env
