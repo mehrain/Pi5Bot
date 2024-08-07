@@ -22,18 +22,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application
 COPY . .
 
+# Make the pull script executable
+RUN chmod +x /apps/Pi5Bot/pull_latest.sh
+
 # Set environment variables from .env file
 RUN apt-get update && apt-get install -y python3-dotenv
 RUN python -c "from dotenv import load_dotenv; load_dotenv('.env')"
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-
-# Copy the pull script
-COPY pull_latest.sh /apps/Pi5Bot/pull_latest.sh
-
-# Make the pull script executable
-RUN chmod +x /apps/Pi5Bot/pull_latest.sh
 
 # Run the pull script and then start the application
 CMD ["/bin/bash", "-c", "/apps/Pi5Bot/pull_latest.sh && python main.py"]
