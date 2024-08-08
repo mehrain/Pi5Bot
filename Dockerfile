@@ -26,6 +26,9 @@ COPY . .
 # Make the pull script executable
 RUN chmod +x /apps/Pi5Bot/pull_latest.sh
 
+# Configure git to add the safe directory
+RUN git config --global --add safe.directory /apps/Pi5Bot
+
 # Set environment variables from .env file
 # RUN apt-get update && apt-get install -y python3-dotenv
 RUN python -c "from dotenv import load_dotenv; load_dotenv('.env')"
