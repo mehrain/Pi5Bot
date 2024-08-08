@@ -5,7 +5,8 @@ FROM python:3.9-slim AS base
 RUN apt-get update && apt-get install -y \
     git \
     build-essential \
-    gcc
+    gcc \
+    python3-dotenv
 
 # Set the working directory
 WORKDIR /apps/Pi5Bot
@@ -26,7 +27,7 @@ COPY . .
 RUN chmod +x /apps/Pi5Bot/pull_latest.sh
 
 # Set environment variables from .env file
-RUN apt-get update && apt-get install -y python3-dotenv
+# RUN apt-get update && apt-get install -y python3-dotenv
 RUN python -c "from dotenv import load_dotenv; load_dotenv('.env')"
 
 # Set environment variables

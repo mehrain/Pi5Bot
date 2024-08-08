@@ -4,6 +4,7 @@ import discord
 
 # Load the environment variables
 load_dotenv() 
+disc_token = os.getenv('DISCORD_TOKEN')  
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -28,7 +29,13 @@ async def on_message(message):
     if message.content.startswith('$help'):
         await message.channel.send('Hello! I am a bot. I can help you with the following commands: \n $hello - To greet you \n $bye - To say goodbye \n $help - To display this message')
         
-#fetching the token 
-token = os.getenv('DISCORD_TOKEN')  
+# cogs_list = [
+#     'games',
+#     'socials'
+# ]
 
-client.run(token)
+# for cog in cogs_list:
+#     bot.load_extension(f'src.cogs.{cog}')
+
+
+client.run(disc_token)
