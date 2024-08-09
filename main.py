@@ -20,7 +20,8 @@ async def on_ready():
 #add list of cogs to load
 cogs_list = [
     'help',
-    'responses'
+    'responses',
+    'bootdev'
 ]
 
 for cog in cogs_list:

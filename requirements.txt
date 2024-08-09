@@ -1,7 +1,7 @@
 py-cord
 python-dotenv
-csv
 pypokedex
 requests
 beautifulsoup4
 datetime
+pandas
