@@ -5,19 +5,16 @@ import discord
 class Responses(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if message.author == self.bot.user:
-            return
-
-        if message.content.startswith('$hello'):
-            embed = discord.Embed(title='Hello!', description='Nice to meet you!')
-            await message.channel.send(embed=embed)
         
-        if message.content.startswith('$bye'):
-            embed = discord.Embed(title='Goodbye!', description='See you later!')
-            await message.channel.send(embed=embed)
+    @commands.command()
+    async def hello(self, ctx):
+        embed = discord.Embed(title='Hello!', description='Nice to meet you!')
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    async def bye(self, ctx):
+        embed = discord.Embed(title='Goodbye!', description='See you later!')
+        await ctx.send(embed=embed)
             
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
