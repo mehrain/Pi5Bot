@@ -25,6 +25,10 @@ cogs_list = [
 ]
 
 for cog in cogs_list:
-    bot.load_extension(f'src.cogs.{cog}')
+    try:
+        bot.load_extension(f'src.cogs.{cog}')
+        print(f'Loaded {cog} cog successfully.')
+    except Exception as e:
+        print(f'Failed to load {cog} cog: {e}')
 
 bot.run(disc_token)

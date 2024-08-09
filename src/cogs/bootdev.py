@@ -6,9 +6,10 @@ from src.functions.bootdevparse.Pokematch import Pokematch
 class BootDev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        #print ("BootDev cog initialized")
 
     @commands.command()
-    async def pokematch(self, ctx):
+    async def last10(self, ctx):
         try:
             # Log the start of the command
             print("pokematch command started")
@@ -30,7 +31,7 @@ class BootDev(commands.Cog):
             print("Last 10 rows extracted")
 
             # Send the last 10 rows as an embed message
-            embed = discord.Embed(title="Last 10 Archmages", color=discord.Color.blue())
+            embed = discord.Embed(title="Last 10 Archmages", color=discord.Color.gold())
             for index, row in last_10_rows.iterrows():
                 embed.add_field(name=f"Archmage rank: {index+1}", value=row.to_string(index=False), inline=False)
             await ctx.send(embed=embed)
@@ -41,3 +42,4 @@ class BootDev(commands.Cog):
 
 def setup(bot):
     bot.add_cog(BootDev(bot))
+    #print("BootDev cog loaded")
