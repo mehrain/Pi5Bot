@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import os
 import discord
 from discord.ext import commands
-import discord
 
 # Load the environment variables
 load_dotenv()
@@ -21,7 +20,8 @@ async def on_ready():
 #add list of cogs to load
 cogs_list = [
     'help',
-    'responses'
+    'responses',
+    'bootdev'
 ]
 
 for cog in cogs_list:

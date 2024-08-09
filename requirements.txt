@@ -1,2 +1,7 @@
 py-cord
 python-dotenv
+pypokedex
+requests
+beautifulsoup4
+datetime
+pandas
