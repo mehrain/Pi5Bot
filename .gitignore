@@ -162,3 +162,5 @@ cython_debug/
 #.idea/
 src/functions/bootdevparse/BDparsed.csv
 src/functions/bootdevparse/BDraw.html
+src/functions/bootdevparse/src/functions/bootdevparse/BDraw.html
+src/functions/bootdevparse/BDparsed_with_pokemon.csv

@@ -10,4 +10,3 @@ class Pokedex:
         print(f"Pokemon name: {pokemon.name}")
         return pokemon
     
-# Pokedex().get(150)

@@ -1,3 +1,4 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import csv
@@ -12,7 +13,8 @@ class BDParser:
         response = requests.get(url)
         self.html = response.text
 
-    def save_html(self, file_path):
+    def save_html(self, file_name):
+        file_path = os.path.join(os.getcwd(), file_name)
         with open(file_path, 'w') as file:
             file.write(self.html)
 
@@ -38,7 +40,8 @@ class BDParser:
         for i, entry in enumerate(self.entries, start=1):
             self.entries[i-1] = (i, entry[1], entry[2], entry[3])
 
-    def write_to_csv(self, file_path):
+    def write_to_csv(self, file_name):
+        file_path = os.path.join(os.getcwd(), file_name)
         with open(file_path, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['Rank', 'Name', 'Username', 'Date'])
@@ -55,7 +58,7 @@ class BDParser:
             return
 
         try:
-            parser.save_html('src/functions/bootdevparse/BDraw.html')
+            parser.save_html('BDraw.html')
             print("HTML saved successfully.")
         except Exception as e:
             print(f"Failed to save HTML: {e}")
@@ -83,11 +86,9 @@ class BDParser:
             return
 
         try:
-            parser.write_to_csv('src/functions/bootdevparse/BDparsed.csv')
+            parser.write_to_csv('BDparsed.csv')
             print("CSV written successfully.")
         except Exception as e:
             print(f"Failed to write CSV: {e}")
             return
-
-# Start the process
-BDParser.start()
+    

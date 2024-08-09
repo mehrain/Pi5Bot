@@ -1,12 +1,13 @@
+import os
+import csv
 from BDparse import BDParser
 from Pokeapi import Pokedex
-import csv
 
 class Pokematch:
     def __init__(self):
         self.pokedex = Pokedex()
-        self.input_file = 'BDparsed.csv'
-        self.output_file = 'BDparsed_with_pokemon.csv'
+        self.input_file = os.path.join(os.getcwd(), 'BDparsed.csv')
+        self.output_file = os.path.join(os.getcwd(), 'BDparsed_with_pokemon.csv')
 
     def process_csv(self):
         with open(self.input_file, mode='r', newline='') as infile, open(self.output_file, mode='w', newline='') as outfile:
@@ -20,7 +21,7 @@ class Pokematch:
 
             # Process each row
             for row in reader:
-                rank = int(row[0].split(': ')[1])
+                rank = int(row[0])
                 pokemon = self.pokedex.get(rank).name
                 row.append(f"Pokemon based on rank: {pokemon}")
                 writer.writerow(row)
@@ -33,9 +34,5 @@ class Pokematch:
 
 
 if __name__ == "__main__":
-    pokematch = Pokematch()
-    pokematch.run()
-    
-def main():
     pokematch = Pokematch()
     pokematch.run()
