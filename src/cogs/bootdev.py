@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import pandas as pd
-from src.functions.bootdevparse.BDparse import BDParser
 from src.functions.bootdevparse.Pokematch import Pokematch
 
 class BootDev(commands.Cog):

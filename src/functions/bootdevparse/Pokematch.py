@@ -1,7 +1,7 @@
 import os
 import csv
-from BDparse import BDParser
-from Pokeapi import Pokedex
+from src.functions.bootdevparse.BDparse import BDParser
+from src.functions.bootdevparse.Pokeapi import Pokedex
 
 class Pokematch:
     def __init__(self):
