@@ -1,12 +1,13 @@
-# Use a lightweight Python image as the base
+# Base stage: Install dependencies and build the application
 FROM python:3.9-slim AS base
 
 # Install git and build tools
 RUN apt-get update && apt-get install -y \
     git \
     build-essential \
-    gcc \ 
-    python3-dotenv
+    gcc \
+    python3-dotenv && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /apps/Pi5Bot
@@ -29,8 +30,22 @@ RUN chmod +x /apps/Pi5Bot/pull_latest.sh
 # Configure git to add the safe directory
 RUN git config --global --add safe.directory /apps/Pi5Bot
 
+# Final stage: Create a minimal image with only the necessary artifacts
+FROM python:3.9-slim AS final
+
+# Install git and python-dotenv in the final stage
+RUN apt-get update && apt-get install -y \
+    git && \
+    pip install python-dotenv && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
+WORKDIR /apps/Pi5Bot
+
+# Copy the application from the base stage
+COPY --from=base /apps/Pi5Bot /apps/Pi5Bot
+
 # Set environment variables from .env file
-# RUN apt-get update && apt-get install -y python3-dotenv
 RUN python -c "from dotenv import load_dotenv; load_dotenv('.env')"
 
 # Set environment variables
