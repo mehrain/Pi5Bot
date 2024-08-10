@@ -21,7 +21,7 @@ class Responses(commands.Cog):
         if isinstance(error, commands.CommandNotFound):
             embed = discord.Embed(
                 title='Command Not Found',
-                description=f"The command `{ctx.invoked_with}` was not found G.",
+                description=f"The command `{ctx.invoked_with}` was not found.",
                 color=discord.Color.red()
             )
             await ctx.send(embed=embed)
