@@ -18,7 +18,7 @@ class Help(commands.Cog):
         embed.add_field(name="$hello", value="To greet you", inline=False)
         embed.add_field(name="$bye", value="To say goodbye", inline=False)
         embed.add_field(name="$help", value="To display this message", inline=False)
-        embed.add_field(name="$last10", value="Displays the last 10 people that have achieved Archmage.", inline=False)
+        embed.add_field(name="$arch10", value="Displays the last 10 people that have achieved Archmage.", inline=False)
         await ctx.send(embed=embed)
         #print("Help command executed")
 
