@@ -51,9 +51,9 @@ class BootDev(commands.Cog):
             print(f"An error occurred: {e}")
             await ctx.send("An error occurred while sending the embed message. That sucks.")
             
-    @commands.command()
-    async def archlookup(self, ctx, what :str, value):
-        pass
+    # @commands.command()
+    # async def archlookup(self, ctx, what :str, value):
+    #     pass
             
     @commands.command()
     async def archsync(self, ctx):
@@ -108,7 +108,6 @@ def setup(bot):
     boot_dev_instance = BootDev(bot)
     bot.add_cog(boot_dev_instance)
     boot_dev_instance.start_scheduler()
-    boot_dev_instance.archsync()
     
     
 
