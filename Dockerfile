@@ -19,9 +19,6 @@ RUN git clone https://github.com/mehrain/Pi5Bot.git .
 # Upgrade pip
 RUN pip install --upgrade pip
 
-# Install ninja separately
-RUN pip install ninja
-
 # Copy the requirements file
 COPY requirements.txt ./
 
