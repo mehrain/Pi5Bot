@@ -1,11 +1,12 @@
 # Base stage: Install dependencies and build the application
-FROM python:3.9-slim AS base
+FROM arm32v7/python:3.9-slim AS base
 
-# Install git and build tools
+# Install git, build tools, and CMake
 RUN apt-get update && apt-get install -y \
     git \
     build-essential \
     gcc \
+    cmake \
     python3-dotenv && \
     rm -rf /var/lib/apt/lists/*
 
@@ -14,6 +15,12 @@ WORKDIR /apps/Pi5Bot
 
 # Clone the repository
 RUN git clone https://github.com/mehrain/Pi5Bot.git .
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Install ninja separately
+RUN pip install ninja
 
 # Copy the requirements file
 COPY requirements.txt ./
@@ -31,7 +38,7 @@ RUN chmod +x /apps/Pi5Bot/pull_latest.sh
 RUN git config --global --add safe.directory /apps/Pi5Bot
 
 # Final stage: Create a minimal image with only the necessary artifacts
-FROM python:3.9-slim AS final
+FROM arm32v7/python:3.9-slim AS final
 
 # Install git and python-dotenv in the final stage
 RUN apt-get update && apt-get install -y \
