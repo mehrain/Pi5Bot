@@ -1,4 +1,4 @@
-import discord
+import discord, schedule, time, threading
 from discord.ext import commands
 import pandas as pd
 from src.functions.bootdevparse.Pokematch import Pokematch
@@ -9,7 +9,7 @@ class BootDev(commands.Cog):
         #print ("BootDev cog initialized")
 
     @commands.command()
-    async def last10(self, ctx):
+    async def arch10(self, ctx):
         try:
             # Read the Pokemon CSV file
             df = pd.read_csv('BDparsed_with_pokemon.csv')
@@ -46,7 +46,35 @@ class BootDev(commands.Cog):
         except Exception as e:
             print(f"An error occurred: {e}")
             await ctx.send("An error occurred. That sucks.")
+            
+  
+  # make the Pokematch run every hour          
+    def start_scheduler(self):
+        schedule.every().hour.do(self.run_pokematch)
+        thread = threading.Thread(target=self.run_scheduler)
+        thread.start()
+        print("Scheduler started")
+
+    def run_scheduler(self):
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+    def run_pokematch(self):
+        try:
+            print("Scheduled Pokematch run started")
+            pokematch_instance = Pokematch()
+            result = pokematch_instance.run()
+            print("Scheduled Pokematch run executed")
+        except Exception as e:
+            print(f"An error occurred during scheduled run: {e}")
+
+            
+                  
 
 def setup(bot):
-    bot.add_cog(BootDev(bot))
-    #print("BootDev cog loaded")
+    boot_dev_instance = BootDev(bot)
+    bot.add_cog(boot_dev_instance)
+    boot_dev_instance.start_scheduler()
+    
+
