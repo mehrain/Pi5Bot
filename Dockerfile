@@ -1,5 +1,5 @@
 # Base stage: Install dependencies and build the application
-FROM arm32v7/python:3.9-slim AS base
+FROM python:latest AS base
 
 # Install git, build tools, and CMake
 RUN apt-get update && apt-get install -y \
@@ -35,7 +35,7 @@ RUN chmod +x /apps/Pi5Bot/pull_latest.sh
 RUN git config --global --add safe.directory /apps/Pi5Bot
 
 # Final stage: Create a minimal image with only the necessary artifacts
-FROM arm32v7/python:3.9-slim AS final
+FROM python:latest AS final
 
 # Install git and python-dotenv in the final stage
 RUN apt-get update && apt-get install -y \
