@@ -168,3 +168,6 @@ BDraw.html
 BDparsed.csv
 BDparsed_with_pokemon.csv
 
+/pivenv/
+
+src/db/bootdev.db

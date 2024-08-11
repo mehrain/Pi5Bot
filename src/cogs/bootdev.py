@@ -2,6 +2,7 @@ import discord, schedule, time, threading
 from discord.ext import commands
 import pandas as pd
 from src.functions.bootdevparse.Pokematch import Pokematch
+from src.functions.bootdevparse.BDparse import BDParser
 
 class BootDev(commands.Cog):
     def __init__(self, bot):
@@ -58,16 +59,19 @@ class BootDev(commands.Cog):
     @commands.command()
     async def archsync(self, ctx):
         try:
-            # Log the start of the command
-            print("pokematch command started")
 
-            # Instantiate the Pokematch class
-            pokematch_instance = Pokematch()
-            print("Pokematch instance created")
+            BDParser().start()
 
-            # Execute the run method
-            result = pokematch_instance.run()
-            print("Pokematch run method executed")
+            # # Log the start of the command
+            # print("pokematch command started")
+
+            # # Instantiate the Pokematch class
+            # pokematch_instance = Pokematch()
+            # print("Pokematch instance created")
+
+            # # Execute the run method
+            # result = pokematch_instance.run()
+            # print("Pokematch run method executed")
             
             # Send a nice embed message to indicate successful completion of Pokematch run
             embed = discord.Embed(title="Pokematch Run Completed", color=discord.Color.green())
@@ -95,8 +99,8 @@ class BootDev(commands.Cog):
     def run_pokematch(self):
         try:
             print("Scheduled Pokematch run started")
-            pokematch_instance = Pokematch()
-            result = pokematch_instance.run()
+            # pokematch_instance = Pokematch()
+            # result = pokematch_instance.run()
             print("Scheduled Pokematch run executed")
         except Exception as e:
             print(f"An error occurred during scheduled run: {e}")
