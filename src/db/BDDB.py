@@ -50,7 +50,6 @@ class BDDB:
 
 
 if __name__ == '__main__':
-
     bddb = BDDB()
 
     bddb.get_archmages()
