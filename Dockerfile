@@ -37,9 +37,10 @@ RUN git config --global --add safe.directory /apps/Pi5Bot
 # Final stage: Create a minimal image with only the necessary artifacts
 FROM python:latest AS final
 
-# Install git and python-dotenv in the final stage
+# Install git, python-dotenv, and cmake in the final stage
 RUN apt-get update && apt-get install -y \
-    git && \
+    git \
+    cmake && \
     pip install python-dotenv && \
     rm -rf /var/lib/apt/lists/*
 
