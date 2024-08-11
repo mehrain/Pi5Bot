@@ -50,6 +50,9 @@ WORKDIR /apps/Pi5Bot
 # Copy the application from the base stage
 COPY --from=base /apps/Pi5Bot /apps/Pi5Bot
 
+# Configure git to add the safe directory
+RUN git config --global --add safe.directory /apps/Pi5Bot
+
 # Set environment variables from .env file
 RUN python -c "from dotenv import load_dotenv; load_dotenv('.env')"
 
