@@ -11,7 +11,7 @@ class BootDev(commands.Cog):
 
     @commands.command()
     async def archrecent(self, ctx, number: int):
-        bddb = BDDB('/path/to/your/database.db')
+        bddb = BDDB('/src.db/BDDB.db')
         
         if not number:
             await ctx.send("Please enter a number")

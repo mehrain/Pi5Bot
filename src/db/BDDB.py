@@ -44,10 +44,9 @@ class BDDB:
         result = c.execute("SELECT Rank, Name, Username, Date FROM ArchmageArcanum ORDER BY Rank DESC LIMIT ?", (number,))
         rows = result.fetchall()
 
-        for row in rows:
-            print(row)
-
         conn.close()
+
+        return rows
 
 
 if __name__ == '__main__':
