@@ -1,8 +1,7 @@
 import discord, schedule, time, threading
 from discord.ext import commands
-import pandas as pd
-from src.functions.bootdevparse.Pokematch import Pokematch
 from src.functions.bootdevparse.BDparse import BDParser
+from src.db.BDDB import BDDB
 
 class BootDev(commands.Cog):
     def __init__(self, bot):
@@ -12,15 +11,7 @@ class BootDev(commands.Cog):
 
     @commands.command()
     async def archrecent(self, ctx, number: int):
-        
-        try:
-            # Read the Pokemon CSV file
-            df = pd.read_csv('BDparsed_with_pokemon.csv')
-            print("CSV file read successfully")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            await ctx.send("An error occurred while building dataframe. That sucks.")
-            return
+        bddb = BDDB('/path/to/your/database.db')
         
         if not number:
             await ctx.send("Please enter a number")
@@ -28,24 +19,22 @@ class BootDev(commands.Cog):
         elif number <= 0:
             await ctx.send("Please enter a number greater than 0")
             return
-        elif number > len(df):
-            await ctx.send("Number exceeds the length of the CSV file")
-            return
         
         try:
-            # Get the last 10 rows
-            last_x_rows = df.tail(number)
-            print(f"Last {number} rows extracted")
+            rows = bddb.get_recent_archmages(number)
+            if not rows:
+                await ctx.send("No data found")
+                return
             
-            total_characters = last_x_rows.astype(str).sum(axis=1).str.len().sum()
+            total_characters = sum(len(str(row)) for row in rows)
             if total_characters > 6000:
                 await ctx.send("The total number of characters exceeds the limit of 6000.")
                 return
 
-            # Send the last 10 rows as an embed message
+            # Send the last `number` rows as an embed message
             embed = discord.Embed(title=f"Last {number} Archmages", color=discord.Color.gold())
-            for index, row in last_x_rows.iterrows():
-                embed.add_field(name=f"Archmage rank: {index+1}", value=row.to_string(index=False), inline=False)
+            for index, row in enumerate(rows):
+                embed.add_field(name=f"Archmage rank: {row[0]}", value=f"Name: {row[1]}, Username: {row[2]}, Date: {row[3]}", inline=False)
             await ctx.send(embed=embed)
             print("Embed message sent successfully")
         except Exception as e:

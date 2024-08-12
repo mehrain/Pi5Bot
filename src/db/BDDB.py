@@ -36,11 +36,12 @@ class BDDB:
         conn.commit()
         conn.close()
 
-    def get_archmages(self):
+    def get_recent_archmages(self, number: int = 5):
         conn = sqlite3.connect(self.filepath)
         c = conn.cursor()
 
-        result = c.execute("Select Rank, Name, Username, Date FROM ArchmageArcanum")
+        # Select the last `number` entries ordered by Rank in descending order
+        result = c.execute("SELECT Rank, Name, Username, Date FROM ArchmageArcanum ORDER BY Rank DESC LIMIT ?", (number,))
         rows = result.fetchall()
 
         for row in rows:
