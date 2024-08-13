@@ -1,63 +1,36 @@
-# Base stage: Install dependencies and build the application
-FROM python:latest AS base
+# Build stage
+FROM python:3.9-alpine AS builder
 
-# Install git, build tools, and CMake
-RUN apt-get update && apt-get install -y \
-    git \
-    build-essential \
-    gcc \
-    cmake \
-    python3-dotenv && \
-    rm -rf /var/lib/apt/lists/*
+# Install build dependencies and bash
+RUN apk add --no-cache gcc musl-dev linux-headers bash
 
 # Set the working directory
 WORKDIR /apps/Pi5Bot
 
-# Clone the repository
-RUN git clone https://github.com/mehrain/Pi5Bot.git .
-
-# Upgrade pip
-RUN pip install --upgrade pip
-
-# Copy the requirements file
+# Copy only necessary files
 COPY requirements.txt ./
+COPY main.py ./
+COPY src ./src
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Upgrade pip and install dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application
-COPY . .
+# Final stage
+FROM python:3.9-alpine
 
-# Make the pull script executable
-RUN chmod +x /apps/Pi5Bot/pull_latest.sh
-
-# Configure git to add the safe directory
-RUN git config --global --add safe.directory /apps/Pi5Bot
-
-# Final stage: Create a minimal image with only the necessary artifacts
-FROM python:latest AS final
-
-# Install git, python-dotenv, and cmake in the final stage
-RUN apt-get update && apt-get install -y \
-    git \
-    cmake && \
-    pip install python-dotenv && \
-    rm -rf /var/lib/apt/lists/*
+# Install bash
+RUN apk add --no-cache bash
 
 # Set the working directory
 WORKDIR /apps/Pi5Bot
 
-# Copy the application from the base stage
-COPY --from=base /apps/Pi5Bot /apps/Pi5Bot
-
-# Configure git to add the safe directory
-RUN git config --global --add safe.directory /apps/Pi5Bot
-
-# Set environment variables from .env file
-RUN python -c "from dotenv import load_dotenv; load_dotenv('.env')"
+# Copy only necessary files from the builder stage
+COPY --from=builder /apps/Pi5Bot /apps/Pi5Bot
+COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 
-# Run the pull script and then start the application
-CMD ["/bin/bash", "-c", "/apps/Pi5Bot/pull_latest.sh && python main.py"]
+# Run the application
+CMD ["python", "main.py"]

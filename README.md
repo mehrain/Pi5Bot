@@ -2,6 +2,7 @@
 A personal discord bot running on my raspberrypi
 
 ## Features
+- [x] Runs a sqlite database to store the list of archmages and their respective pokemon
 - [x] Match archmages with their respective pokemon
 - [x] Automatiaccly update the list of archmages and their pokemon every hour (or any other time interval)
 
