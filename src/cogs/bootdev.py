@@ -6,12 +6,11 @@ from src.db.BDDB import BDDB
 class BootDev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.df = None
         #print ("BootDev cog initialized")
 
     @commands.command()
     async def archrecent(self, ctx, number: int):
-        bddb = BDDB('/src.db/BDDB.db')
+        bddb = BDDB('')
         
         if not number:
             await ctx.send("Please enter a number")
@@ -62,10 +61,11 @@ class BootDev(commands.Cog):
             # result = pokematch_instance.run()
             # print("Pokematch run method executed")
             
-            # Send a nice embed message to indicate successful completion of Pokematch run
-            embed = discord.Embed(title="Pokematch Run Completed", color=discord.Color.green())
-            embed.add_field(name="Status", value="Pokematch run completed successfully", inline=False)
-            await ctx.send(embed=embed)
+            # # Send a nice embed message to indicate successful completion of Pokematch run
+            # embed = discord.Embed(title="Pokematch Run Completed", color=discord.Color.green())
+            # embed.add_field(name="Status", value="Pokematch run completed successfully", inline=False)
+            # await ctx.send(embed=embed)
+            await ctx.send("Sync completed successfully")
             
         except Exception as e:
             print(f"An error occurred: {e}")
@@ -98,7 +98,9 @@ class BootDev(commands.Cog):
                   
 
 def setup(bot):
+    bddb = BDDB()  # Create the BDDB instance
     boot_dev_instance = BootDev(bot)
+    boot_dev_instance.bddb = bddb  # Assign the BDDB instance to the cog
     bot.add_cog(boot_dev_instance)
     boot_dev_instance.start_scheduler()
     

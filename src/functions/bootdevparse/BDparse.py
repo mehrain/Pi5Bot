@@ -1,7 +1,6 @@
-import os
+# Description: This file contains the BDParser class which is responsible for crawling, parsing, sorting, reassigning ranks and writing the data to the database.
 import requests
 from bs4 import BeautifulSoup
-import csv
 from datetime import datetime
 from src.db.BDDB import BDDB
 
@@ -67,38 +66,4 @@ class BDParser:
             print(f"Failed to crawl data: {e}")
             return
 
-        # try:
-        #     parser.save_html('BDraw.html')
-        #     print("HTML saved successfully.")
-        # except Exception as e:
-        #     print(f"Failed to save HTML: {e}")
-        #     return
 
-        # try:
-        #     parser.parse_html() # 30 entries
-        #     print("HTML parsed successfully.")
-        # except Exception as e:
-        #     print(f"Failed to parse HTML: {e}")
-        #     return
-
-        # try:
-        #     parser.sort_entries()
-        #     print("Entries sorted successfully.")
-        # except Exception as e:
-        #     print(f"Failed to sort entries: {e}")
-        #     return
-
-        # try:
-        #     parser.reassign_ranks()
-        #     print("Ranks reassigned successfully.")
-        # except Exception as e:
-        #     print(f"Failed to reassign ranks: {e}")
-        #     return
-
-        # try:
-        #     parser.write_to_csv('BDparsed.csv')
-        #     print("CSV written successfully.")
-        # except Exception as e:
-        #     print(f"Failed to write CSV: {e}")
-        #     return
-    
