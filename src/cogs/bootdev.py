@@ -10,7 +10,7 @@ class BootDev(commands.Cog):
 
     @commands.command()
     async def archrecent(self, ctx, number: int):
-        bddb = BDDB('')
+        bddb = BDDB()
         
         if not number:
             await ctx.send("Please enter a number")
