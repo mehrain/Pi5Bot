@@ -6,8 +6,8 @@ from src.functions.bootdevparse.Pokeapi import Pokedex
 class Pokematch:
     def __init__(self):
         self.pokedex = Pokedex()
-        self.input_file = os.path.join(os.getcwd(), 'BDparsed.csv')
-        self.output_file = os.path.join(os.getcwd(), 'BDparsed_with_pokemon.csv')
+        # self.input_file = os.path.join(os.getcwd(), 'BDparsed.csv')
+        # self.output_file = os.path.join(os.getcwd(), 'BDparsed_with_pokemon.csv')
 
     def process_csv(self):
         with open(self.input_file, mode='r', newline='') as infile, open(self.output_file, mode='w', newline='') as outfile:
@@ -23,7 +23,7 @@ class Pokematch:
             for row in reader:
                 rank = int(row[0])
                 pokemon = self.pokedex.get(rank).name
-                row.append(f"Pokemon based on rank: {pokemon}")
+                row.append(f"Pokemon based on Archmage rank: {pokemon}")
                 writer.writerow(row)
 
         print(f"Updated CSV file with Pokémon saved to {self.output_file}")
