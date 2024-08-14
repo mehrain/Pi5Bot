@@ -1,6 +1,7 @@
 import discord, schedule, time, threading
 from discord.ext import commands
 from src.functions.bootdevparse.BDparse import BDParser
+from src.functions.bootdevparse.Pokeapi import Pokedex
 from src.db.BDDB import BDDB
 
 class BootDev(commands.Cog):
@@ -33,7 +34,8 @@ class BootDev(commands.Cog):
             # Send the last `number` rows as an embed message
             embed = discord.Embed(title=f"Last {number} Archmages", color=discord.Color.gold())
             for index, row in enumerate(rows):
-                embed.add_field(name=f"Archmage rank: {row[0]}", value=f"Name: {row[1]}, Username: {row[2]}, Date: {row[3]}", inline=False)
+                value = f"Name: {row[1]}\nUsername: {row[2]}\nDate: {row[3]}\nMatching Pokemon: {row[4]}"
+                embed.add_field(name=f"Archmage rank: {row[0]}", value=value, inline=False)
             await ctx.send(embed=embed)
             print("Embed message sent successfully")
         except Exception as e:
@@ -49,22 +51,7 @@ class BootDev(commands.Cog):
         try:
 
             BDParser().start()
-
-            # # Log the start of the command
-            # print("pokematch command started")
-
-            # # Instantiate the Pokematch class
-            # pokematch_instance = Pokematch()
-            # print("Pokematch instance created")
-
-            # # Execute the run method
-            # result = pokematch_instance.run()
-            # print("Pokematch run method executed")
-            
-            # # Send a nice embed message to indicate successful completion of Pokematch run
-            # embed = discord.Embed(title="Pokematch Run Completed", color=discord.Color.green())
-            # embed.add_field(name="Status", value="Pokematch run completed successfully", inline=False)
-            # await ctx.send(embed=embed)
+            Pokedex().append_pokemon()
             await ctx.send("Sync completed successfully")
             
         except Exception as e:
@@ -89,6 +76,7 @@ class BootDev(commands.Cog):
         try:
             print("Scheduled BDParser run started")
             BDParser().start()
+            Pokedex().append_pokemon()
             print("Scheduled BDParser run executed")
         except Exception as e:
             print(f"An error occurred during scheduled run: {e}")
