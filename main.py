@@ -11,7 +11,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 #define bot instance and set command prefix
-bot = commands.Bot(command_prefix='$', intents=intents)
+bot = commands.Bot(intents=intents)
 
 @bot.event
 async def on_ready():
@@ -32,3 +32,5 @@ for cog in cogs_list:
         print(f'Failed to load {cog} cog: {e}')
 
 bot.run(disc_token)
+
+#TODO force sync py-cord slash commands with discord

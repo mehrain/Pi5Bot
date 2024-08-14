@@ -1,5 +1,6 @@
 import discord, schedule, time, threading
 from discord.ext import commands
+from discord.commands import option
 from src.functions.bootdevparse.BDparse import BDParser
 from src.functions.bootdevparse.Pokeapi import Pokedex
 from src.db.BDDB import BDDB
@@ -7,10 +8,13 @@ from src.db.BDDB import BDDB
 class BootDev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        
         #print ("BootDev cog initialized")
 
-    @commands.command()
-    async def archrecent(self, ctx, number: int):
+    @discord.slash_command(name="archrecent", description="Get the last n Archmages")
+    @option("number", description="The number of Archmages to display", required=True, type=int)
+    async def archrecent(self, ctx: discord.ApplicationContext, number: int):
+
         bddb = BDDB()
         
         if not number:
@@ -46,7 +50,7 @@ class BootDev(commands.Cog):
     # async def archlookup(self, ctx, what :str, value):
     #     pass
             
-    @commands.command()
+    @commands.slash_command(name='archsync', description='Sync the Archmage data')
     async def archsync(self, ctx):
         try:
 
