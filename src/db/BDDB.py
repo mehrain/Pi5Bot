@@ -25,7 +25,7 @@ class BDDB:
         conn = sqlite3.connect(self.filepath)
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS ArchmageArcanum
-                    (Rank INT, Name TEXT, Username TEXT, Date TEXT, Score INT, Pokemon TEXT)''')
+                    (Rank INT, Name TEXT, Username TEXT, Date TEXT, Pokemon TEXT)''')
         conn.commit()
         conn.close()
         
