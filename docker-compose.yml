@@ -7,6 +7,4 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - .:/apps/Pi5Bot
-    command: /bin/bash -c "chmod +x /apps/Pi5Bot/pull_latest.sh && /apps/Pi5Bot/pull_latest.sh && python main.py"
-    env_file:
-      - /home/mehrain/Workspace/github.com/mehrain/Pi5Bot/.env
+    command: /bin/bash -c "python main.py"
