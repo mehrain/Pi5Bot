@@ -7,4 +7,8 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - .:/apps/Pi5Bot
+    env_file:
+      - ./Pi5Bot/.env
+
     command: /bin/bash -c "python main.py"
+    
