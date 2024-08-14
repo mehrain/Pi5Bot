@@ -25,7 +25,7 @@ class BDDB:
         conn = sqlite3.connect(self.filepath)
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS ArchmageArcanum
-                     (Rank INT, Name TEXT, Username TEXT, Date TEXT)''')
+                    (Rank INT, Name TEXT, Username TEXT, Date TEXT, Pokemon TEXT)''')
         conn.commit()
         conn.close()
         
@@ -43,13 +43,13 @@ class BDDB:
         c = conn.cursor()
 
         # Select the last `number` entries ordered by Rank in descending order
-        result = c.execute("SELECT Rank, Name, Username, Date FROM ArchmageArcanum ORDER BY Rank DESC LIMIT ?", (number,))
+        result = c.execute("SELECT Rank, Name, Username, Date, Pokemon FROM ArchmageArcanum ORDER BY Rank DESC LIMIT ?", (number,))
         rows = result.fetchall()
 
         conn.close()
 
         return rows
-
+    
 
 if __name__ == '__main__':
     bddb = BDDB()
