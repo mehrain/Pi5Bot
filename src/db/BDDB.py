@@ -49,7 +49,9 @@ class BDDB:
         conn.close()
 
         return rows
-
+    
+    def append_pokemon(self):
+        pass
 
 if __name__ == '__main__':
     bddb = BDDB()

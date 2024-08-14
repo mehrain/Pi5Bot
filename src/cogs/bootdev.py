@@ -75,7 +75,7 @@ class BootDev(commands.Cog):
   
   # make the Pokematch run every hour          
     def start_scheduler(self):
-        schedule.every().hour.do(self.run_pokematch)
+        schedule.every().hour.do(self.run_autoupdate)
         thread = threading.Thread(target=self.run_scheduler)
         thread.start()
         print("Scheduler started")
@@ -85,12 +85,11 @@ class BootDev(commands.Cog):
             schedule.run_pending()
             time.sleep(1)
 
-    def run_pokematch(self):
+    def run_autoupdate(self):
         try:
-            print("Scheduled Pokematch run started")
-            # pokematch_instance = Pokematch()
-            # result = pokematch_instance.run()
-            print("Scheduled Pokematch run executed")
+            print("Scheduled BDParser run started")
+            BDParser().start()
+            print("Scheduled BDParser run executed")
         except Exception as e:
             print(f"An error occurred during scheduled run: {e}")
 
