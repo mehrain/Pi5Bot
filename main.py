@@ -10,14 +10,27 @@ disc_token = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.message_content = True
 
-#define bot instance and set command prefix
-bot = commands.Bot(command_prefix='$', intents=intents)
+# define bot instance and set command prefix
+bot = commands.Bot(intents=intents)
 
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
+    
+# Global error handler
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("Command not found. Please use a valid command.")
+    elif isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Missing required argument. Please check the command usage.")
+    elif isinstance(error, commands.CommandOnCooldown):
+        await ctx.send(f"Command is on cooldown. Try again after {error.retry_after:.2f} seconds.")
+    else:
+        await ctx.send("An error occurred while processing the command.")
+        print(f"Error in global error handler: {error}")
 
-#add list of cogs to load
+# add list of cogs to load
 cogs_list = [
     'help',
     'responses',
