@@ -65,7 +65,24 @@ class BDDB:
             if conn:
                 conn.close()
         return rows
+    
+    def get_entry_by_column_value(self, column: str, value):
+        conn = None
+        row = None
+        try:
+            conn = sqlite3.connect(self.filepath)
+            c = conn.cursor()
+            query = "SELECT * FROM ArchmageArcanum WHERE {} = ?".format(column)
+            c.execute(query, (value,))
+            row = c.fetchone()
+        except sqlite3.Error as e:
+            print(f"Error retrieving entry by {column}: {e}")
+        finally:
+            if conn:
+                conn.close()
+        return row
 
 if __name__ == '__main__':
     bddb = BDDB()
     print("Database and table created successfully.")
+    

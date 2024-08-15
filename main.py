@@ -24,6 +24,11 @@ bot = commands.Bot(intents=intents)
 
 @bot.event
 async def on_ready():
+    try:
+        if bot.auto_sync_commands:
+            await bot.sync_commands()
+    except Exception as e:
+        print(f"Failed to sync commands: {e}")
     print(f'Bot is ready to go! My name is {bot.user}')
 
     
