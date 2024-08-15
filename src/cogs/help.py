@@ -23,5 +23,6 @@ class Help(commands.Cog):
         #print("Help command executed")
 
 def setup(bot):
-    bot.add_cog(Help(bot))
+    cog = Help(bot)
+    bot.add_cog(cog)
     #print("Help cog loaded")
