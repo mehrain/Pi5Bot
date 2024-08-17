@@ -19,6 +19,7 @@ class Help(commands.Cog):
         embed.add_field(name="/bye", value="To say goodbye", inline=False)
         embed.add_field(name="/help", value="To display this message", inline=False)
         embed.add_field(name="/archrecent [number]", value="Displays the last [number] people that have achieved Archmage.", inline=False)
+        embed.add_field(name="/archrank [username]", value="Displays the rank of the user with the username [username].", inline=False)
         await ctx.send(embed=embed)
         #print("Help command executed")
 
