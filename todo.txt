@@ -1,0 +1,4 @@
+Ensure that database logic code only comes from BDDB instead of querying the pokeapi. 
+Maybe move casting/validation to a separate class/file/method.
+As I mentioned earlier, regarding data quality, validate before inserting instead of after.
+
