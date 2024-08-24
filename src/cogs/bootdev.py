@@ -20,7 +20,16 @@ class BootDev(commands.Cog):
         try:
             BDParser().start()
             Pokedex().append_pokemon()
-            await ctx.respond("Sync completed successfully")
+            if self.bddb.check_arcanum_integrity():
+                print("integrity check passed")
+                await ctx.respond("Sync completed successfully.")
+            else:
+                print("integrity check failed, table dropped")
+                BDParser().start()
+                Pokedex().append_pokemon()
+                print ("recreated table") 
+                await ctx.respond("Sync completed successfully but integrity check failed. Table recreated.")
+            
         except Exception as e:
             print(f"An error occurred: {e}")
             await ctx.respond("An error occurred. That sucks.")
@@ -143,6 +152,14 @@ class BootDev(commands.Cog):
             print("Scheduled BDParser run started")
             BDParser().start()
             Pokedex().append_pokemon()
+            if self.bddb.check_integrity():
+                print("Integrity check passed")
+            else:
+                print("Integrity check failed, table dropped")
+                BDParser().start()
+                Pokedex().append_pokemon()
+                print("Recreated table")
+            
             print("Scheduled BDParser run executed")
         except Exception as e:
             print(f"An error occurred during scheduled run: {e}")

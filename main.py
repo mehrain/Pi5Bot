@@ -13,15 +13,6 @@ intents.message_content = True
 # define bot instance and set command prefix
 bot = commands.Bot(intents=intents)
 
-# @bot.event
-# async def on_connect():
-#     try:
-#         if bot.auto_sync_commands:
-#             await bot.sync_commands()
-#     except Exception as e:
-#         print(f"Failed to sync commands: {e}")
-#     print(f'Connected to Discord as {bot.user}')
-
 @bot.event
 async def on_ready():
     try:

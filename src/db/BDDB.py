@@ -81,6 +81,30 @@ class BDDB:
             if conn:
                 conn.close()
         return row
+    
+    def check_arcanum_integrity(self) -> bool:
+        conn = None
+        try:
+            conn = sqlite3.connect(self.filepath)
+            c = conn.cursor()
+            c.execute("SELECT rowid, Rank FROM ArchmageArcanum")
+            rows = c.fetchall()
+            for row in rows:
+                if row[0] != row[1]:
+                    print(f"Integrity check failed at rowid {row[0]}: Rank {row[1]} does not match rowid.")
+                    c.execute("DROP TABLE ArchmageArcanum")
+                    conn.commit()
+                    print("Table dropped due to integrity check failure.")
+                    return False
+            print("Database integrity check passed.")
+            return True
+        except sqlite3.Error as e:
+            print(f"Error checking database integrity: {e}")
+            return False
+        finally:
+            if conn:
+                conn.close()
+        
 
 if __name__ == '__main__':
     bddb = BDDB()
