@@ -152,7 +152,7 @@ class BootDev(commands.Cog):
             print("Scheduled BDParser run started")
             BDParser().start()
             Pokedex().append_pokemon()
-            if self.bddb.check_integrity():
+            if self.bddb.check_arcanum_integrity():
                 print("Integrity check passed")
             else:
                 print("Integrity check failed, table dropped")
